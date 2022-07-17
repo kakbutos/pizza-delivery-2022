@@ -9,8 +9,9 @@ function Categories() {
             <ul>
                 { categories.map((category, key) => {
                     return  <li onClick={() => setActiveCategory(key)}
-                               className={ key === activeCategory ? "active" : "" }
-                               key={key}>{ category }
+                                className={ key === activeCategory ? "active" : "" }
+                                key={key}>
+                                { category }
                             </li>
                 }) }
             </ul>
