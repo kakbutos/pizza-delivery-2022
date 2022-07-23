@@ -15,7 +15,8 @@ const Home = () => {
             .then((list) => {
                 setPizzaList(list);
                 setIsLoading(false);
-            })
+            });
+        window.scrollTo(0, 0);
     }, []);
 
     return (
