@@ -4,11 +4,13 @@ import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
+import Pagination from "../components/Pagination";
 
-const Home = () => {
+const Home = ({searchValue}) => {
     const [pizzaList, setPizzaList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [categoryId, setCategoryId] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState({
         name: 'популярности', sortProperty: 'rating'
     });
@@ -19,15 +21,18 @@ const Home = () => {
         const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
         const sortBy = sort.sortProperty.replace('-', '');
         const category = categoryId > 0 ? `category=${categoryId}` : '';
+        const search = searchValue ? `&search=${searchValue}` : '';
 
-        fetch(`https://62d437c0cd960e45d4552a2b.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`)
+        fetch(`https://62d437c0cd960e45d4552a2b.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`)
             .then((res) => res.json())
             .then((list) => {
                 setPizzaList(list);
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, [categoryId, sort]);
+    }, [categoryId, sort, searchValue, currentPage]);
+
+    const pizzas = pizzaList.map((pizza) => <PizzaBlock key={pizza.id} {...pizza}/>);
 
     return (
         <>
@@ -39,9 +44,10 @@ const Home = () => {
             <div className="content__items">
                 { isLoading
                     ? [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-                    : pizzaList.map((pizza) => <PizzaBlock key={pizza.id} {...pizza}/>)
+                    : pizzas
                 }
             </div>
+            <Pagination onChangePage={number => setCurrentPage(number)}/>
         </>
     )
 }
