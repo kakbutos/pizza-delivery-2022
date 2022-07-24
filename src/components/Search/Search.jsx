@@ -1,6 +1,9 @@
 import styles from './Search.module.scss';
+import {useContext} from "react";
+import {searchContext} from "../../App";
 
-const Search = ({searchValue, setSearchValue}) => {
+const Search = () => {
+    const {searchValue, setSearchValue} = useContext(searchContext);
 
     const onClickClear = () => {
         setSearchValue('');
