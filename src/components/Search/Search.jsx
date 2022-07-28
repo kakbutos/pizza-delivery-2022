@@ -1,12 +1,30 @@
-import styles from './Search.module.scss';
-import {useContext} from "react";
+import {useCallback, useContext, useRef, useState} from "react";
+import debounce from 'lodash.debounce';
 import {searchContext} from "../../App";
 
+import styles from './Search.module.scss';
+
 const Search = () => {
-    const {searchValue, setSearchValue} = useContext(searchContext);
+    const [value, setValue] = useState('');
+    const {setSearchValue} = useContext(searchContext);
+    const inputRef = useRef();
 
     const onClickClear = () => {
         setSearchValue('');
+        setValue('');
+        inputRef.current.focus();
+    }
+    // eslint-disable-next-line
+    const updateSearchValue = useCallback(
+        debounce((str) => {
+            setSearchValue(str);
+        }, 400),
+        [],
+    );
+
+    const onChangeInput = (event) => {
+        setValue(event.target.value);
+        updateSearchValue(event.target.value);
     }
 
     return (
@@ -45,11 +63,12 @@ const Search = () => {
                 />
             </svg>
             <input className={styles.input}
+                   ref={inputRef}
                    placeholder="Поиск пиццы..."
-                   value={searchValue}
-                   onChange={(e) => setSearchValue(e.target.value)}
+                   value={value}
+                   onChange={onChangeInput}
             />
-            {searchValue && (
+            {value && (
                 <svg
                     onClick={onClickClear}
                     className={styles.clearIcon}
