@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from 'react-router-dom';
 
@@ -11,20 +11,17 @@ import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import {list} from '../components/Sort';
-import {searchContext} from "../App";
 import {fetchPizzas} from "../redux/slices/pizzaSlice";
 
 const Home = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const isSearch = useRef(false);
+    // const isSearch = useRef(false);
     const isMounted = useRef(false);
 
-    const {categoryId, sort, currentPage} = useSelector(state => state.filter);
+    const {categoryId, sort, currentPage, searchValue} = useSelector(state => state.filter);
     const {items, status} = useSelector(state => state.pizza);
     const sortType = sort.sortProperty;
-
-    const {searchValue} = useContext(searchContext);
 
     const onChangeCategory = (id) => {
         dispatch(setCategoryId(id));
@@ -61,7 +58,7 @@ const Home = () => {
                     sort
                 })
             );
-            isSearch.current = true;
+            // isSearch.current = true;
         }
         // eslint-disable-next-line
     }, [])
@@ -70,10 +67,10 @@ const Home = () => {
         window.scrollTo(0, 0);
 
         // if(!isSearch.current) {
-            getPizzas();
+        getPizzas();
         // }
 
-        isSearch.current = false;
+        // isSearch.current = false;
         // eslint-disable-next-line
     }, [categoryId, sortType, searchValue, currentPage]);
 
