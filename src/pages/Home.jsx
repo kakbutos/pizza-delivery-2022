@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import qs from 'qs';
 
@@ -88,7 +88,7 @@ const Home = () => {
         // eslint-disable-next-line
     }, [categoryId, sortType, searchValue, currentPage]);
 
-    const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza}/>);
+    const pizzas = items.map((pizza) => (<Link to={`/pizza/${pizza.id}`}><PizzaBlock key={pizza.id} {...pizza}/></Link>));
 
     return (
         <>
