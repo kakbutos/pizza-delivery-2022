@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setSort} from "../redux/slices/filterSlice";
 
@@ -30,8 +30,12 @@ export const Sort = () => {
     };
 
     useEffect(() => {
-        const handleClickOutside = (event: any) => {
-            if (!event.path.includes(sortRef.current)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            const _event = event as MouseEvent & {
+                path: Node[];
+            };
+
+            if (sortRef.current && !_event.path.includes(sortRef.current)) {
                 setVisible(false);
             }
         };
