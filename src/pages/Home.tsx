@@ -13,21 +13,23 @@ import Pagination from "../components/Pagination";
 import {list} from '../components/Sort';
 import {fetchPizzas} from "../redux/slices/pizzaSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // const isSearch = useRef(false);
     const isMounted = useRef(false);
 
+    // @ts-ignore
     const {categoryId, sort, currentPage, searchValue} = useSelector(state => state.filter);
+    // @ts-ignore
     const {items, status} = useSelector(state => state.pizza);
     const sortType = sort.sortProperty;
 
-    const onChangeCategory = (id) => {
+    const onChangeCategory = (id: number) => {
         dispatch(setCategoryId(id));
     }
 
-    const onChangePage = (page) => {
+    const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));
     }
 
@@ -37,6 +39,7 @@ const Home = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const search = searchValue ? `&search=${searchValue}` : '';
 
+        // @ts-ignore
         dispatch(fetchPizzas({
             order,
             sortBy,
@@ -88,7 +91,7 @@ const Home = () => {
         // eslint-disable-next-line
     }, [categoryId, sortType, searchValue, currentPage]);
 
-    const pizzas = items.map((pizza) => (<Link to={`/pizza/${pizza.id}`}><PizzaBlock key={pizza.id} {...pizza}/></Link>));
+    const pizzas = items.map((pizza: any) => (<Link to={`/pizza/${pizza.id}`}><PizzaBlock key={pizza.id} {...pizza}/></Link>));
 
     return (
         <>

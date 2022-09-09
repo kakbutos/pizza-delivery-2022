@@ -53,7 +53,7 @@ function Header() {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                        <span>{items.reduce((sum, item) => sum + item.count, 0)}</span>
+                        <span>{items.reduce((sum: number, item: any) => sum + item.count, 0)}</span>
                     </Link>
                 </div>
             </div>

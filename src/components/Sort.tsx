@@ -2,29 +2,35 @@ import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setSort} from "../redux/slices/filterSlice";
 
-export const list = [
-    { name: 'популярности (DESC)', sortProperty: 'rating'},
-    { name: 'популярности (ASC)', sortProperty: '-rating'},
-    { name: 'цене (DESC)',         sortProperty: 'price'},
-    { name: 'цене (ASC)',         sortProperty: '-price'},
-    { name: 'алфавиту (DESC)',     sortProperty: 'title'},
-    { name: 'алфавиту (ASC)',     sortProperty: '-title'}
+type SortItem = {
+    name: string;
+    sortProperty: string;
+};
+
+export const list: SortItem[] = [
+    { name: 'популярности (DESC)',  sortProperty: 'rating'},
+    { name: 'популярности (ASC)',   sortProperty: '-rating'},
+    { name: 'цене (DESC)',          sortProperty: 'price'},
+    { name: 'цене (ASC)',           sortProperty: '-price'},
+    { name: 'алфавиту (DESC)',      sortProperty: 'title'},
+    { name: 'алфавиту (ASC)',       sortProperty: '-title'}
 ];
 
 export const Sort = () => {
     const dispatch = useDispatch();
+    // @ts-ignore
     const sort = useSelector(state => state.filter.sort);
-    const sortRef = useRef();
+    const sortRef = useRef<HTMLDivElement>(null);
 
     const [visible, setVisible] = useState(false);
 
-    const onClickListItem = (obj) => {
+    const onClickListItem = (obj: SortItem) => {
         dispatch(setSort(obj));
         setVisible(false);
     };
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: any) => {
             if (!event.path.includes(sortRef.current)) {
                 setVisible(false);
             }
