@@ -1,28 +1,26 @@
 import React, {useEffect, useRef} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {Link, useNavigate} from 'react-router-dom';
 
 import qs from 'qs';
 
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
 import Categories from "../components/Categories";
-import {Sort} from "../components/Sort";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
-import {list} from '../components/Sort';
-import {fetchPizzas} from "../redux/slices/pizzaSlice";
+import {list, SortPopup} from '../components/Sort';
+import {fetchPizzas, SearchPizzaParams} from "../redux/slices/pizzaSlice";
+import {RootState, useAppDispatch} from "../redux/store";
 
 const Home: React.FC = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    // const isSearch = useRef(false);
-    const isMounted = useRef(false);
+    // const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    // const isMounted = useRef(false);
 
-    // @ts-ignore
-    const {categoryId, sort, currentPage, searchValue} = useSelector(state => state.filter);
-    // @ts-ignore
-    const {items, status} = useSelector(state => state.pizza);
+    const {categoryId, sort, currentPage, searchValue} = useSelector((state: RootState) => state.filter);
+
+    const {items, status} = useSelector((state: RootState) => state.pizza);
     const sortType = sort.sortProperty;
 
     const onChangeCategory = (id: number) => {
@@ -39,65 +37,59 @@ const Home: React.FC = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const search = searchValue ? `&search=${searchValue}` : '';
 
-        // @ts-ignore
-        dispatch(fetchPizzas({
+        await dispatch(fetchPizzas({
             order,
             sortBy,
             category,
             search,
-            currentPage
+            currentPage: String(currentPage)
         }));
     }
 
-    useEffect(() => {
-        if(window.location.search) {
-            const params= qs.parse(window.location.search.substring(1));
-
-            const sort = list.find(obj => obj.sortProperty === params.sortProperty)
-
-            dispatch(
-                setFilters({
-                    ...params,
-                    sort
-                })
-            );
-            // isSearch.current = true;
-        }
-        // eslint-disable-next-line
-    }, [])
+    // useEffect(() => {
+    //     if(window.location.search) {
+    //         const params= qs.parse(window.location.search.substring(1));
+    //
+    //         const sort = list.find(obj => obj.sortProperty === params.sortProperty)
+    //
+    //         dispatch(
+    //             setFilters({
+    //                 ...params,
+    //                 sort
+    //             })
+    //         );
+    //         // isSearch.current = true;
+    //     }
+    //     // eslint-disable-next-line
+    // }, [])
 
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        // if(!isSearch.current) {
         getPizzas();
-        // }
-
-        // isSearch.current = false;
-        // eslint-disable-next-line
     }, [categoryId, sortType, searchValue, currentPage]);
 
-    useEffect(() => {
-        if(isMounted.current) {
-            const queryString = qs.stringify({
-                sortProperty: sort.sortProperty,
-                categoryId,
-                currentPage
-            })
+    // useEffect(() => {
+    //     if(isMounted.current) {
+    //         const queryString = qs.stringify({
+    //             sortProperty: sort.sortProperty,
+    //             categoryId,
+    //             currentPage
+    //         })
+    //
+    //         navigate(`?${queryString}`)
+    //     }
+    //     isMounted.current = true;
+    //     // eslint-disable-next-line
+    // }, [categoryId, sortType, searchValue, currentPage]);
 
-            navigate(`?${queryString}`)
-        }
-        isMounted.current = true;
-        // eslint-disable-next-line
-    }, [categoryId, sortType, searchValue, currentPage]);
-
-    const pizzas = items.map((pizza: any) => (<Link to={`/pizza/${pizza.id}`}><PizzaBlock key={pizza.id} {...pizza}/></Link>));
+    const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza}/>);
 
     return (
         <>
             <div className="content__top">
                 <Categories value={categoryId} onClickCategory={onChangeCategory}/>
-                <Sort />
+                <SortPopup />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {

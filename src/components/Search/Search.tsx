@@ -15,7 +15,7 @@ const Search = () => {
         setValue('');
         inputRef.current?.focus();
     }
-    // eslint-disable-next-line
+
     const updateSearchValue = useCallback(
         debounce((str: string) => {
             dispatch(setSearchValue(str));
