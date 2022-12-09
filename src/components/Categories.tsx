@@ -1,11 +1,11 @@
-import React from "react";
+import React, {memo} from "react";
 
 type CategoriesProps = {
     value: number;
     onClickCategory: (i: number) => void;
 };
 
-const Categories: React.FC<CategoriesProps> = ({value, onClickCategory}) => {
+const Categories: React.FC<CategoriesProps> = memo(({value, onClickCategory}) => {
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
     return (
@@ -15,12 +15,12 @@ const Categories: React.FC<CategoriesProps> = ({value, onClickCategory}) => {
                     return  <li onClick={() => onClickCategory(key)}
                                 className={ key === value ? "active" : "" }
                                 key={key}>
-                                { category }
-                            </li>
+                        { category }
+                    </li>
                 }) }
             </ul>
         </div>
     )
-}
+});
 
 export default Categories;

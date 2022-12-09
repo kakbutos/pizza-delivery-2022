@@ -1,12 +1,16 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {memo, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setSort, SortPropertyEnum} from "../redux/slices/filterSlice";
+import {setSort, Sort, SortPropertyEnum} from "../redux/slices/filterSlice";
 import {RootState} from "../redux/store";
 
 type SortItem = {
     name: string;
     sortProperty: SortPropertyEnum;
 };
+
+type SortPopupProps = {
+    value: Sort;
+}
 
 export const list: SortItem[] = [
     { name: 'популярности (DESC)',  sortProperty: SortPropertyEnum.RATING_DESC },
@@ -17,10 +21,9 @@ export const list: SortItem[] = [
     { name: 'алфавиту (ASC)',       sortProperty: SortPropertyEnum.TITLE_ASC }
 ];
 
-export const SortPopup = () => {
+export const SortPopup: React.FC<SortPopupProps> = memo(({ value }) => {
     const dispatch = useDispatch();
 
-    const sort = useSelector((state: RootState) => state.filter.sort);
     const sortRef = useRef<HTMLDivElement>(null);
 
     const [visible, setVisible] = useState(false);
@@ -62,14 +65,14 @@ export const SortPopup = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setVisible(!visible)}>{sort.name}</span>
+                <span onClick={() => setVisible(!visible)}>{value.name}</span>
             </div>
             {visible && (
                 <div className="sort__popup">
                     <ul>
                         { list.map((obj, key) =>
                             <li onClick={() => onClickListItem(obj)}
-                                className={sort.sortProperty === obj.sortProperty ? 'active' : ''}
+                                className={value.sortProperty === obj.sortProperty ? 'active' : ''}
                                 key={key}>
                                 {obj.name}
                             </li>)
@@ -79,4 +82,4 @@ export const SortPopup = () => {
             )}
         </div>
     )
-}
+})
