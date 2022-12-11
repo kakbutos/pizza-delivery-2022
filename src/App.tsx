@@ -19,6 +19,7 @@ function App() {
                 <div className="container">
                     <Routes>
                         <Route path="/" element={<Home/>} />
+                        <Route path="/pizza-delivery-2022" element={<Home/>} />
                         <Route
                             path="/cart"
                             element={
