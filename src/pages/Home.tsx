@@ -11,9 +11,7 @@ import {setCategoryId, setCurrentPage} from "../redux/filter/slice";
 import {fetchPizzas} from "../redux/pizza/slice";
 
 const Home: React.FC = () => {
-    // const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    // const isMounted = useRef(false);
 
     const {categoryId, sort, currentPage, searchValue} = useSelector((state: RootState) => state.filter);
 
@@ -43,42 +41,11 @@ const Home: React.FC = () => {
         }));
     }
 
-    // useEffect(() => {
-    //     if(window.location.search) {
-    //         const params= qs.parse(window.location.search.substring(1));
-    //
-    //         const sort = list.find(obj => obj.sortProperty === params.sortProperty)
-    //
-    //         dispatch(
-    //             setFilters({
-    //                 ...params,
-    //                 sort
-    //             })
-    //         );
-    //         // isSearch.current = true;
-    //     }
-    //     // eslint-disable-next-line
-    // }, [])
-
     useEffect(() => {
         window.scrollTo(0, 0);
 
         getPizzas();
     }, [categoryId, sortType, searchValue, currentPage]);
-
-    // useEffect(() => {
-    //     if(isMounted.current) {
-    //         const queryString = qs.stringify({
-    //             sortProperty: sort.sortProperty,
-    //             categoryId,
-    //             currentPage
-    //         })
-    //
-    //         navigate(`?${queryString}`)
-    //     }
-    //     isMounted.current = true;
-    //     // eslint-disable-next-line
-    // }, [categoryId, sortType, searchValue, currentPage]);
 
     const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza}/>);
 
