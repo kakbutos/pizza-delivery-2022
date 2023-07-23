@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/pizza-delivery-2022/static/css/main.cdca144c.css",
-    "main.js": "/pizza-delivery-2022/static/js/main.45ffceb5.js",
+    "main.js": "/pizza-delivery-2022/static/js/main.7cce7dae.js",
     "Cart.js": "/pizza-delivery-2022/static/js/Cart.93edbb76.chunk.js",
     "FullPizza.js": "/pizza-delivery-2022/static/js/FullPizza.b817fe4e.chunk.js",
     "static/media/empty-cart.png": "/pizza-delivery-2022/static/media/empty-cart.db905d1f4b063162f25b.png",
     "static/media/pizza-logo.svg": "/pizza-delivery-2022/static/media/pizza-logo.56ac87032d8f6fdf863326acd06c0d97.svg",
     "index.html": "/pizza-delivery-2022/index.html",
     "main.cdca144c.css.map": "/pizza-delivery-2022/static/css/main.cdca144c.css.map",
-    "main.45ffceb5.js.map": "/pizza-delivery-2022/static/js/main.45ffceb5.js.map",
+    "main.7cce7dae.js.map": "/pizza-delivery-2022/static/js/main.7cce7dae.js.map",
     "Cart.93edbb76.chunk.js.map": "/pizza-delivery-2022/static/js/Cart.93edbb76.chunk.js.map",
     "FullPizza.b817fe4e.chunk.js.map": "/pizza-delivery-2022/static/js/FullPizza.b817fe4e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cdca144c.css",
-    "static/js/main.45ffceb5.js"
+    "static/js/main.7cce7dae.js"
   ]
 }
