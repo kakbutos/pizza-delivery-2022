@@ -49,7 +49,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
             </Link>
             <div className="pizza-block__selector">
                 <ul>
-                    { types.map(typeId =>
+                    { types?.map(typeId =>
                         <li onClick={() => setActiveTypePizza(typeId)}
                             className={activeTypePizza === typeId ? 'active' : ''}
                             key={typeId}>
@@ -58,7 +58,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
                     }
                 </ul>
                 <ul>
-                    { sizes.map((size, key) =>
+                    { sizes?.map((size, key) =>
                         <li onClick={() => setActiveSize(key)}
                             className={activeSize === key ? 'active' : ''}
                             key={key}>
