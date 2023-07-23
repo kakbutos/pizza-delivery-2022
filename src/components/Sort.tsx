@@ -39,7 +39,7 @@ export const SortPopup: React.FC<SortPopupProps> = memo(({ value }) => {
                 path: Node[];
             };
 
-            if (sortRef.current && !_event.path.includes(sortRef.current)) {
+            if (sortRef.current && _event.path.length && !_event.path.includes(sortRef.current)) {
                 setVisible(false);
             }
         };
